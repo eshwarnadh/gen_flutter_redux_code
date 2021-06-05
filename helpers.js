@@ -58,9 +58,12 @@ function GenerateModel({ actions, service_name, root_path }) {
 
   const formattedCode = `
   class AppState {
-    Map<String, dynamic> initialState = ${JSON.stringify(initialState)};
+    Map<String, dynamic> initialState;
   
-  
+    AppState.initialState()
+    : initialState = ${JSON.stringify(initialState)};
+
+    AppState({this.initialState});
     AppState.fromAppState(AppState another) {
       initialState = another.initialState;
     }
@@ -90,10 +93,8 @@ function GenerateReducers({ actions, service_name, root_path }) {
       }
     }, {})
     let code = `import '../actions/actionCreators.dart';\nimport '../model/app_state.dart';\n\n
-    const initialState = ${JSON.stringify(initialState)};\n\n
     AppState appReducer(AppState prevState, dynamic action){
-      AppState newState = AppState.fromAppState(prevState);
-      switch (action) {\n\n
+      AppState newState = AppState.fromAppState(prevState);\n
     `,
       clonedData = data
     actions.forEach((action) => {
@@ -109,14 +110,14 @@ function GenerateReducers({ actions, service_name, root_path }) {
 
       clonedData = clonedData.replace(/ACTION_TYPE/g, action)
 
-      code = code + clonedData + "\n\n"
+      code = code + clonedData + "\n\n" + "\n else "
       clonedData = data
     })
     code =
       code +
-      `\ndefault:
-      return newState;\n}
+      `\n
       return newState;  
+      \nreturn newState;  
   }
   `
     const formattedCode = code

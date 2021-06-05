@@ -1,25 +1,19 @@
-case ACTION_TYPE_REQ:
+if(action is ACTION_TYPE_REQ)
     newState.initialState["ACTION_TYPE"] = {
         "isLoading": true,
         "data": [],
         "error": ""
     };
-    break;
-
-case ACTION_TYPE_SUCCESS:
+else if(action is ACTION_TYPE_SUCCESS)
     newState.initialState["ACTION_TYPE"] = {
         "isLoading": false,
         "data": action.payload,
         "error": ""
     };
-    break;
-
-
-case ACTION_TYPE_FAILURE:
+else if(action is ACTION_TYPE_FAILURE) 
     newState.initialState["ACTION_TYPE"] = {
         "isLoading": false,
         "data": [],
         "error": action.payload
     };
-    break;
 
