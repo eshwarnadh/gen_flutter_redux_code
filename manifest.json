@@ -1,0 +1,10 @@
+{
+    "service_name": "damn",
+    "actions": [
+       "GetPeople",
+       "GetUsers",
+       "GetDoctors",
+       "GetNurses"
+    ],
+    "components": []
+}

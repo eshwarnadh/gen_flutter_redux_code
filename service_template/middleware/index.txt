@@ -1,0 +1,14 @@
+ThunkAction<AppState> ACTION_TYPE() {
+  return (Store<AppState> store) async {
+    store.dispatch(ACTION_CREATOR_REQ());
+    try {
+      var url = Uri.parse('/path');
+      var response = await http.get(url);
+      var decodedData = jsonDecode(response.body);
+      store.dispatch(ACTION_CREATOR_SUCCESS(decodedData));
+    } catch (e) {
+      print(e);
+      store.dispatch(ACTION_CREATOR_FAILURE(e.toString()));
+    }
+  };
+}
