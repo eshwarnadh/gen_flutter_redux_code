@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import '../middleware/app_middleware.dart';
-import '../model/app_state.dart';
 
 class WIDGET_NAME extends StatefulWidget {
   @override

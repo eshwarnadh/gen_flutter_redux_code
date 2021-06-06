@@ -57,19 +57,23 @@ function GenerateModel({ actions, service_name, root_path }) {
   }, {})
 
   const formattedCode = `
-  class AppState {
+  class ${service_name[0].toUpperCase() + service_name.slice(1)} {
     Map<String, dynamic> initialState;
   
-    AppState.initialState()
+    ${service_name[0].toUpperCase() + service_name.slice(1)}.initialState()
     : initialState = ${JSON.stringify(initialState)};
 
-    AppState({this.initialState});
-    AppState.fromAppState(AppState another) {
+    ${
+      service_name[0].toUpperCase() + service_name.slice(1)
+    }({this.initialState});
+    ${service_name[0].toUpperCase() + service_name.slice(1)}.from${
+    service_name[0].toUpperCase() + service_name.slice(1)
+  }(${service_name[0].toUpperCase() + service_name.slice(1)} another) {
       initialState = another.initialState;
     }
   }`
   fs.writeFile(
-    `${root_path}/${service_name}/model/app_state.dart`,
+    `${root_path}/${service_name}/model/${service_name.toLowerCase()}_state.dart`,
     `${formattedCode}`,
     function (err) {
       if (err) throw err
@@ -92,9 +96,11 @@ function GenerateReducers({ actions, service_name, root_path }) {
         }
       }
     }, {})
-    let code = `import '../actions/actionCreators.dart';\nimport '../model/app_state.dart';\n\n
-    AppState appReducer(AppState prevState, dynamic action){
-      AppState newState = AppState.fromAppState(prevState);\n
+    const service_name_state =
+      service_name[0].toUpperCase() + service_name.slice(1)
+    let code = `import '../actions/actionCreators.dart';\nimport '../model/${service_name.toLowerCase()}_state.dart';\n\n
+    ${service_name_state} appReducer(${service_name_state} prevState, dynamic action){
+      ${service_name_state} newState = ${service_name_state}.from${service_name_state}(prevState);\n
     `,
       clonedData = data
     actions.forEach((action) => {
@@ -122,7 +128,7 @@ function GenerateReducers({ actions, service_name, root_path }) {
   `
     const formattedCode = code
     fs.writeFile(
-      `${root_path}/${service_name}/reducers/app_reducer.dart`,
+      `${root_path}/${service_name}/reducers/${service_name.toLowerCase()}_reducer.dart`,
       `${formattedCode}`,
       function (err) {
         if (err) throw err
@@ -142,7 +148,7 @@ function GenerateMiddleware({ actions, service_name, root_path }) {
     let code = `
     import 'dart:convert';
     import '../actions/actionCreators.dart';
-    import '../model/app_state.dart';
+    import '../model/${service_name.toLowerCase()}_state.dart';
     import 'package:redux_thunk/redux_thunk.dart';
     import 'package:redux/redux.dart';
     import 'package:http/http.dart' as http;
@@ -174,7 +180,7 @@ function GenerateMiddleware({ actions, service_name, root_path }) {
 
     const formattedCode = code
     fs.writeFile(
-      `${root_path}/${service_name}/middleware/app_middleware.dart`,
+      `${root_path}/${service_name}/middleware/${service_name.toLowerCase()}_middleware.dart`,
       `${formattedCode}`,
       function (err) {
         if (err) throw err
@@ -190,7 +196,13 @@ function GenerateWidgets({ widgets, service_name, root_path }) {
     if (err) throw err
 
     widgets.forEach((widget) => {
-      let code = ``,
+      let code = `
+      import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import '../middleware/${service_name.toLowerCase()}_middleware.dart';
+import '../model/${service_name.toLowerCase()}_state.dart';
+
+      `,
         clonedData = data
       clonedData = clonedData.replace(
         /WIDGET_NAME/g,
