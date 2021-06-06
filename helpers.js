@@ -184,9 +184,39 @@ function GenerateMiddleware({ actions, service_name, root_path }) {
   })
 }
 
+function GenerateWidgets({ widgets, service_name, root_path }) {
+  const TEMPLATE_PATH = "./service_template/widget.txt"
+  fs.readFile(TEMPLATE_PATH, "utf8", (err, data) => {
+    if (err) throw err
+
+    widgets.forEach((widget) => {
+      let code = ``,
+        clonedData = data
+      clonedData = clonedData.replace(
+        /WIDGET_NAME/g,
+        widget[0].toUpperCase() + widget.slice(1)
+      )
+      code = code + clonedData + "\n\n"
+      clonedData = data
+      const formattedCode = code
+      fs.writeFile(
+        `${root_path}/${service_name}/widgets/${
+          widget[0].toUpperCase() + widget.slice(1)
+        }.dart`,
+        `${formattedCode}`,
+        function (err) {
+          if (err) throw err
+          console.log(`${widget} widget created successfully.`)
+        }
+      )
+    })
+  })
+}
+
 module.exports = {
   GenerateActionCreators,
   GenerateModel,
   GenerateReducers,
-  GenerateMiddleware
+  GenerateMiddleware,
+  GenerateWidgets
 }

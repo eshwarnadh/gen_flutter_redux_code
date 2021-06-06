@@ -1,10 +1,14 @@
 {
-    "service_name": "damn",
+    "service_name": "Hospital",
     "actions": [
        "GetPeople",
        "GetUsers",
        "GetDoctors",
        "GetNurses"
     ],
-    "components": []
+    "widgets": [
+        "DoctorsList",
+        "NurseList",
+        "usersList"
+    ]
 }

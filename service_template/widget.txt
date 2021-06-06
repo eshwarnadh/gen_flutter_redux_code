@@ -1,0 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import '../middleware/app_middleware.dart';
+import '../model/app_state.dart';
+
+class WIDGET_NAME extends StatefulWidget {
+  @override
+  _WIDGET_NAMEState createState() => _WIDGET_NAMEState();
+}
+
+class _WIDGET_NAMEState extends State<WIDGET_NAME> {
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, AppState>(
+      converter: (store) => store.state,
+      onInitialBuild: (AppState state) {
+        return StoreProvider.of<AppState>(context).dispatch(ACTION_CREATOR());
+      },
+      builder: (context, state) {
+        return Container();
+      },
+    );
+  }
+}
