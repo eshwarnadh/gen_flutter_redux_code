@@ -148,7 +148,7 @@ function GenerateMiddleware({ actions, service_name, root_path }) {
     let code = `
     import 'dart:convert';
     import '../actions/actionCreators.dart';
-    import '../model/${service_name.toLowerCase()}_state.dart';
+    import '../../store/app_state.dart';
     import 'package:redux_thunk/redux_thunk.dart';
     import 'package:redux/redux.dart';
     import 'package:http/http.dart' as http;
