@@ -1,14 +1,5 @@
 {
-    "service_name": "Hospital",
-    "actions": [
-       "GetPeople",
-       "GetUsers",
-       "GetDoctors",
-       "GetNurses"
-    ],
-    "widgets": [
-        "DoctorsList",
-        "NurseList",
-        "usersList"
-    ]
+    "service_name": "",
+    "actions": [],
+    "widgets": []
 }

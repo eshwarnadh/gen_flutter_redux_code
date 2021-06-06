@@ -4,6 +4,7 @@ const fs = require("fs")
 const { GenerateActionCreators, GenerateReducers, GenerateMiddleware, GenerateModel, GenerateWidgets } = require("./helpers")
 
 const { service_name, actions, widgets } = manifest
+if(!service_name) return console.log("Invalid service name")
 const arguments = process.argv ;
 const root_path = arguments[2]
 global.__dirname = root_path
